@@ -2,7 +2,7 @@ from django.db import models
 
 class Company(models.Model):
     name = models.CharField(
-        max_lengt=50,
+        max_lenght=50,
         verbose_name="Название",
     )
     description = models.TextField(
@@ -73,4 +73,4 @@ class Vacancy(models.Model):
         auto_now_add=True,
         verbose_name='Дата создания'
     )
-    #activated =
+    activated = models.BooleanField(default=True)
