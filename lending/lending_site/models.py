@@ -1,76 +1,102 @@
 from django.db import models
+from solo.models import SingletonModel
 
-class Company(models.Model):
+class Company(SingletonModel):
     name = models.CharField(
-        max_lenght=50,
         verbose_name="Название",
+        max_length=50,
     )
     description = models.TextField(
-        verbose_name="Название",
+        verbose_name="Описание",
     )
     image = models.ImageField(
+        verbose_name='Картинка',
         default='default.jpg',
         upload_to='images',
-        verbose_name='Картинка'
     )
 
     def __str__(self):
         return self.description
 
+    class Meta():
+        db_table = 'company'
+        verbose_name = 'Компания'
+        verbose_name_plural = 'Компании'
 
 class Contacts(models.Model):
-    contact = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
+    contact = models.ForeignKey(
+        Company,
+        verbose_name="Контакты",
+        on_delete=models.CASCADE,
+        null=True
+    )
     phone = models.CharField(
-        max_lenght=13,
         verbose_name="Номер компании",
+        max_length=13,
     )
     email = models.EmailField(
-        max_lenght=254,
-        verbose_name="Электронная почта"
+        verbose_name="Электронная почта",
+        max_length=254,
     )
     adress = models.CharField(
-        max_lenght=100,
-        verbose_name="Наш адрес"
+        verbose_name="Наш адрес",
+        max_length=100,
     )
+    class Meta():
+        db_table = 'contacts'
+        verbose_name = 'Контакт'
+        verbose_name_plural = 'Контакты'
+
+
+class Vacancy(models.Model):
+    name = models.CharField(
+        verbose_name="Вакансия",
+        max_length=50,
+    )
+    description = models.CharField(
+        verbose_name="Описание",
+        max_length=500,
+    )
+    salary = models.CharField(
+        verbose_name="Заработная плата",
+        max_length=10,
+    )
+    create_date = models.DateTimeField(
+        verbose_name='Дата создания',
+        auto_now_add=True,
+    )
+    activated = models.BooleanField(
+        verbose_name='Статус активности',
+        default=True,
+    )
+    class Meta():
+        db_table = 'vacancy'
+        verbose_name = 'Вакансия'
+        verbose_name_plural = 'Вакансии'
 
 class Applicants(models.Model):
     full_name = models.CharField(
-        max_lenght=200,
         verbose_name="ФИО",
+        max_length=200,
     )
     phone =  models.CharField(
-        max_lenght=13,
         verbose_name="Номер соискателя",
+        max_length=13,
     )
     email = models.EmailField(
-        max_lenght=254,
-        verbose_name="Электронная почта"
+        verbose_name="Электронная почта",
+        max_length=254,
     )
     comment = models.CharField(
-        max_lenght=350,
         verbose_name="О себе",
+        max_length=350,
     )
     posted_date = models.DateTimeField(
+        verbose_name='Дата отправки',
         auto_now_add=True,
-        verbose_name='Дата отправки'
     )
+    class Meta():
+        db_table = 'applicants'
+        verbose_name = 'Соискатель'
+        verbose_name_plural = 'Соискатели'
 
-class Vacancy(models.Model):
-    vacancy = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
-    vacancy_name = models.CharField(
-        max_lenght=50,
-        verbose_name="Вакансия",
-    )
-    description = models.CharField(
-        max_lenght=500,
-        verbose_name="Описание",
-    )
-    salary = models.CharField(
-        max_lenght=10,
-        verbose_name="Заработная плата",
-    )
-    create_date = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='Дата создания'
-    )
-    activated = models.BooleanField(default=True)
