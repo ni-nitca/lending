@@ -1,0 +1,12 @@
+{% for compan in company %}
+    <p>{{ compan.name }}</p>
+{% endfor %}
+
+{% for vacanc in vacancy %}
+    <p>{{ vacanc.name }}</p>
+{% endfor %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit">
+</form>
