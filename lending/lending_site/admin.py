@@ -4,7 +4,7 @@ from lending_site.models import Company, Contacts, Applicants, Vacancy
 
 
 class ContactsInline(admin.StackedInline):
-    model = Company
+    model = Contacts
     extra = 0
 
 class CompanyAdmin(admin.ModelAdmin):
@@ -18,9 +18,17 @@ class CompanyAdmin(admin.ModelAdmin):
 
     inlines = [ContactsInline]
 
-class VacancyInline(admin.StackedInline):
-    model = Vacancy
-    extra = 0
+
+class VacancyAdmin(admin.ModelAdmin):
+    class Meta:
+        model = Vacancy
+        fields = [
+            'name',
+            'description ',
+            'salary',
+            'create_date',
+            'activated'
+        ]
 
 class ApplicantsAdmin(admin.ModelAdmin):
     class Meta:
@@ -33,6 +41,6 @@ class ApplicantsAdmin(admin.ModelAdmin):
             'posted_date'
         ]
 
-    inlines = [VacancyInline]
-
-admin.site.register(Company, CompanyAdmin, Applicants, ApplicantsAdmin)
+admin.site.register(Applicants, ApplicantsAdmin)
+admin.site.register(Company, CompanyAdmin)
+admin.site.register(Vacancy, VacancyAdmin)
