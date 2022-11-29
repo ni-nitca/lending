@@ -13,7 +13,7 @@ class Company(SingletonModel):
     image = models.ImageField(
         verbose_name='Картинка',
         default='default.jpg',
-        upload_to='images',
+        upload_to='images/',
     )
 
     def __str__(self):
@@ -105,7 +105,9 @@ class Applicants(models.Model):
         auto_now_add=True,
     )
     file = models.FileField(
-
+        verbose_name='Файл',
+        default='default.docx',
+        upload_to='files/'
     )
 
     class Meta:
