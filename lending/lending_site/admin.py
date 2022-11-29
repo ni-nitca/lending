@@ -19,6 +19,10 @@ class CompanyAdmin(admin.ModelAdmin):
     inlines = [ContactsInline]
 
 
+class ApplicantsInline(admin.StackedInline):
+    model = Applicants
+    extra = 0
+
 class VacancyAdmin(admin.ModelAdmin):
     class Meta:
         model = Vacancy
@@ -29,18 +33,7 @@ class VacancyAdmin(admin.ModelAdmin):
             'create_date',
             'activated'
         ]
+    inlines = [ApplicantsInline]
 
-class ApplicantsAdmin(admin.ModelAdmin):
-    class Meta:
-        model = Applicants
-        fields = [
-            'full_name',
-            'phone ',
-            'email',
-            'comment',
-            'posted_date'
-        ]
-
-admin.site.register(Applicants, ApplicantsAdmin)
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Vacancy, VacancyAdmin)
