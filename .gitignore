@@ -1,3 +1,10 @@
 
 *.pyc
 *.xml
+lending/.mypy.ini
+lending/.isort.cfg
+lending/.idea/lending.iml
+lending/.idea/lending.iml
+*.iml
+*.json
+lending/vscode/settings.json
