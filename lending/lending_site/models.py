@@ -3,7 +3,7 @@ from solo.models import SingletonModel
 
 
 class Company(SingletonModel):
-    name = models.CharField(
+    c_name = models.CharField(
         verbose_name="Название",
         max_length=50,
     )
@@ -51,7 +51,7 @@ class Contacts(models.Model):
 
 
 class Vacancy(models.Model):
-    name = models.CharField(
+    v_name = models.CharField(
         verbose_name="Вакансия",
         max_length=50,
     )
