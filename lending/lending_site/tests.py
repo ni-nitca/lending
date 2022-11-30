@@ -12,15 +12,20 @@ from lending_site.models import (
 
 
 class ServiceTestCase(TestCase):
-    company  = Company()
-    contact = Contacts()
-    company.name = 'xxx'
-    company.description = 'xxxx'
-    contact.adress = 'xxxxx'
-    contact.phone = '314141'
-    contact.email = '12345@gmail.com' 
-    def test_gqc(self):
-        print(get_queryset_company)
+    @classmethod
+    def setUpTestData(cls):
+        company  = Company()
+        contact = Contacts()
+        cls.c_name = 'xxx'
+        cls.description = 'xxxx'
+        cls.adress = 'xxxxx'
+        cls.phone = '314141'
+        cls.email = '12345@gmail.com'
+        cls.phone = '12345'
 
-    def test_gqv(self):
-        print(get_queryset_vacancy)
+    def test_view_url_exists_at_desired_location(self):
+        resp = self.client.get('/index/')
+        self.assertEqual(resp.status_code, 200)
+
+
+    
