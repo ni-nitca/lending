@@ -5,28 +5,28 @@ from lending_site.models import (
 
 
 def get_queryset_company():
-    company_queryset = Company.objects.filter(pk=1)
-    c_name = company_queryset.c_name
+    company_queryset = Company.objects.get(pk=1)
+    name = company_queryset.name
     description = company_queryset.description
     image = company_queryset.image
     data = {
-        c_name:'name',
-        description:'description',
-        image:'image'
+        'name':name,
+        'description':description,
+        'image':image,
     }
     return data
 
 def get_queryset_vacancy():
-    vacancy_queryset = Vacancy.objects.filter(activated=1)
+    vacancy_queryset = Vacancy.objects.get(activated=1)
     v_name = vacancy_queryset.v_name
     pk = vacancy_queryset.id
     description = vacancy_queryset.description
     salary = vacancy_queryset.salary
     data = {
-        v_name:'name',
-        pk:'id',
-        salary:'salary',
-        description:'description',
+        'name':v_name,
+        'id':pk,
+        'salary':salary,
+        'description':description,
         }
     return data
 
