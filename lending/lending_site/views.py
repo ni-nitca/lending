@@ -7,6 +7,7 @@ from django.views.generic import (
     )
 from lending_site.service import (
     get_context,
+    save_applicants
 
     )
 from lending_site.models import Applicants
@@ -16,19 +17,15 @@ from lending_site.models import Applicants
 class IndexListView(ListView):
     def get(self, request ):
         template_name = 'lending/index.html'
-        context = get_context()
+        alplicants_answer = 0
+        context = get_context(alplicants_answer)
         return render(request, template_name, context)
+
     def post(self, request):
+        applicants_answer = 1
         template_name = 'lending/index.html'
-        status_code = ['1']
-        context = get_context() + status_code
-        applicants = Applicants
-        full_name = applicants.full_name
-        phone = applicants.phone 
-        email = applicants.email
-        comment = applicants.comment
-        file = applicants.file
-        applicants.save()
+        context = get_context(applicants_answer) 
+    
         return render(request,template_name,context)
 
 
