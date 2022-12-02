@@ -3,12 +3,14 @@ from solo.models import SingletonModel
 
 
 class Company(SingletonModel):
-    c_name = models.CharField(
+    name = models.CharField(
         verbose_name="Название",
         max_length=50,
-    )
+        default= 'text'
+    )#
     description = models.TextField(
         verbose_name="Описание",
+        default= 'text'
     )
     image = models.ImageField(
         verbose_name='Картинка',
@@ -54,14 +56,17 @@ class Vacancy(models.Model):
     v_name = models.CharField(
         verbose_name="Вакансия",
         max_length=50,
+        default="text"
     )
     description = models.CharField(
         verbose_name="Описание",
         max_length=500,
+        default="text"
     )
     salary = models.CharField(
         verbose_name="Заработная плата",
-        max_length=64
+        max_length=64,
+        default="000"
     )
     create_date = models.DateTimeField(
         verbose_name='Дата создания',
