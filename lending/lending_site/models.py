@@ -6,11 +6,11 @@ class Company(SingletonModel):
     name = models.CharField(
         verbose_name="Название",
         max_length=50,
-        default= 'text'
-    )#
+        default= 'Лучшая компания'
+    )
     description = models.TextField(
         verbose_name="Описание",
-        default= 'text'
+        default= 'О нашей компании'
     )
     image = models.ImageField(
         verbose_name='Картинка',
@@ -36,14 +36,17 @@ class Contacts(models.Model):
     phone = models.CharField(
         verbose_name="Номер компании",
         max_length=13,
+        default="8777777777"
     )
     email = models.EmailField(
         verbose_name="Электронная почта",
         max_length=254,
+        default="tech@gmail.com"
     )
     adress = models.CharField(
         verbose_name="Наш адрес",
         max_length=100,
+        default="Абая 1"
     )
 
     class Meta:
@@ -53,20 +56,17 @@ class Contacts(models.Model):
 
 
 class Vacancy(models.Model):
-    v_name = models.CharField(
+    name = models.CharField(
         verbose_name="Вакансия",
         max_length=50,
-        default="text"
     )
     description = models.CharField(
         verbose_name="Описание",
         max_length=500,
-        default="text"
     )
     salary = models.CharField(
         verbose_name="Заработная плата",
         max_length=64,
-        default="000"
     )
     create_date = models.DateTimeField(
         verbose_name='Дата создания',
