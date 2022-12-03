@@ -16,14 +16,20 @@ class ServiceTestCase(TestCase):
     def setUpTestData(cls):
         cls.c_name = 'text'
         cls.c_description = 'text'
-        cls.c_image = 'default.png'
-        cls.v_name = 'Test2'
+        cls.c_image = 'default.jpg'
+        cls.name = 'Test2'
         cls.v_description = 'Testing2'
         cls.salary = '300'
         cls.activated = True
         cls.pk = 1
 
-
+        Vacancy.objects.create(
+            id = cls.pk,
+            v_name = cls.name,
+            description = cls.v_description,
+            salary = cls.salary,
+            activated = cls.activated
+        )
 
     def test_cquery_is_true(self):
         valid_dict = {
