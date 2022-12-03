@@ -1,5 +1,6 @@
-from django.contrib import admin
 
+from django.contrib import admin
+from solo.admin import SingletonModelAdmin
 from lending_site.models import Company, Contacts, Applicants, Vacancy
 
 
@@ -7,7 +8,7 @@ class ContactsInline(admin.StackedInline):
     model = Contacts
     extra = 0
 
-class CompanyAdmin(admin.ModelAdmin):
+class CompanyAdmin(SingletonModelAdmin):
     class Meta:
         model = Company
         fields = [
