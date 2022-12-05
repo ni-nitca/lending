@@ -25,7 +25,7 @@ def get_contacts():
     data = list(contacts_queryset)
     return data
 
-def get_context(answer):
+def get_context(answer,saved):
     company_data = get_queryset_company()
     vacancy_data = get_queryset_vacancy()
     contacts_data = get_contacts()
@@ -33,7 +33,8 @@ def get_context(answer):
         "company":company_data,
         "vacancy":vacancy_data,
         "answer":answer,
-        "contacts":contacts_data
+        "contacts":contacts_data,
+        "saved":saved
     }
     return data
 
