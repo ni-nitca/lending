@@ -21,12 +21,8 @@ def get_queryset_vacancy():
     return data
 
 def get_contacts():
-    contacts_queryset = Company.objects.get_or_create(pk=1)
-    data = {
-        'phone':contacts_queryset[0].phone,
-        'email':contacts_queryset[0].email,
-        'adress':contacts_queryset[0].adress
-    }
+    contacts_queryset = Contacts.objects.filter(activated=True).values()
+    data = list(contacts_queryset)
     return data
 
 def get_context(answer):
@@ -46,17 +42,14 @@ def check_json(file_of_json):
         values = file_of_json.keys()
         true_list = ["full_name","phone","email","comment","file"]
         for value in true_list:
-            if value in values:
-                continue
-            else:
-                print("Ошибка передачи словаря")
-                break
-
+            if value not in values:
+                return False
+        return True
     else:
         print("Не передан словарь")
 
 
-def save_applicants(file_of_json):#
+def save_applicants(file_of_json):
     if check_json(file_of_json):
         applicants = Applicants
         applicants.full_name = file_of_json.full_name 
@@ -65,5 +58,8 @@ def save_applicants(file_of_json):#
         applicants.comment = file_of_json.comment
         applicants.file = file_of_json.file
         applicants.save()
+        return True
+    else:
+        return False
 
 
