@@ -36,17 +36,14 @@ class Contacts(models.Model):
     phone = models.CharField(
         verbose_name="Номер компании",
         max_length=13,
-        default="8777777777"
     )
     email = models.EmailField(
         verbose_name="Электронная почта",
         max_length=254,
-        default="tech@gmail.com"
     )
     adress = models.CharField(
         verbose_name="Наш адрес",
         max_length=100,
-        default="Абая 1"
     )
 
     class Meta:
@@ -60,7 +57,7 @@ class Vacancy(models.Model):
         verbose_name="Вакансия",
         max_length=50,
     )
-    description = models.CharField(
+    description = models.TextField(
         verbose_name="Описание",
         max_length=500,
     )
@@ -112,7 +109,8 @@ class Applicants(models.Model):
     file = models.FileField(
         verbose_name='Файл',
         default='default.docx',
-        upload_to='files/'
+        upload_to='files/',
+        required=False
     )
 
     class Meta:
