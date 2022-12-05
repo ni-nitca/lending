@@ -45,16 +45,19 @@ def check_json(file_of_json):
     if file_of_json != []:
         values = file_of_json.keys()
         true_list = ["full_name","phone","email","comment","file"]
-        if values == true_list:
-            return True
-        else:
-            print('Неверно переданы ключи')
+        for value in true_list:
+            if value in values:
+                continue
+            else:
+                print("Ошибка передачи словаря")
+                break
+
     else:
         print("Не передан словарь")
 
 
-def save_applicants(file_of_json):
-    if check_json(file_of_json) == True:
+def save_applicants(file_of_json):#
+    if check_json(file_of_json):
         applicants = Applicants
         applicants.full_name = file_of_json.full_name 
         applicants.phone = file_of_json.phone  
