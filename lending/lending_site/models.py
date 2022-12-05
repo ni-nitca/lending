@@ -45,6 +45,10 @@ class Contacts(models.Model):
         verbose_name="Наш адрес",
         max_length=100,
     )
+    activated = models.BooleanField(
+        verbose_name='Статус активности',
+        default=True,
+    )
 
     class Meta:
         db_table = 'contacts'
@@ -108,9 +112,8 @@ class Applicants(models.Model):
     )
     file = models.FileField(
         verbose_name='Файл',
-        default='default.docx',
         upload_to='files/',
-        required=False
+        null=True
     )
 
     class Meta:
