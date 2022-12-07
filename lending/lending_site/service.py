@@ -25,18 +25,18 @@ def get_contacts():
     data = list(contacts_queryset)
     return data
 
-def get_context(answer,saved):
-    company_data = get_queryset_company()
-    vacancy_data = get_queryset_vacancy()
-    contacts_data = get_contacts()
-    data = {
-        "company":company_data,
-        "vacancy":vacancy_data,
-        "answer":answer,
-        "contacts":contacts_data,
-        "saved":saved
-    }
-    return data
+def save_applicants(file_of_json):
+    if check_json(file_of_json):
+        applicants = Applicants
+        applicants.full_name = file_of_json.full_name 
+        applicants.phone = file_of_json.phone  
+        applicants.email = file_of_json.email 
+        applicants.comment = file_of_json.comment
+        applicants.file = file_of_json.file
+        applicants.save()
+        return True
+    else:
+        return False
 
 def check_json(file_of_json):
     if file_of_json != []:
@@ -50,17 +50,18 @@ def check_json(file_of_json):
         print("Не передан словарь")
 
 
-def save_applicants(file_of_json):
-    if check_json(file_of_json):
-        applicants = Applicants
-        applicants.full_name = file_of_json.full_name 
-        applicants.phone = file_of_json.phone  
-        applicants.email = file_of_json.email 
-        applicants.comment = file_of_json.comment
-        applicants.file = file_of_json.file
-        applicants.save()
-        return True
-    else:
-        return False
+def get_context():
+    company_data = get_queryset_company()
+    vacancy_data = get_queryset_vacancy()
+    contacts_data = get_contacts()
+    data = {
+        "company":company_data,
+        "vacancy":vacancy_data,
+        "contacts":contacts_data,
+    }
+    return data
+
+
+
 
 
