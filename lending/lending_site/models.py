@@ -33,6 +33,10 @@ class Contacts(models.Model):
         verbose_name="Контакты",
         on_delete=models.CASCADE,
     )
+    title = models.CharField(
+        verbose_name="Описание",
+        max_length=100
+    )
     phone = models.CharField(
         verbose_name="Номер компании",
         max_length=13,
