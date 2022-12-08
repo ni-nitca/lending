@@ -1,6 +1,6 @@
-from django.contrib.auth import views as auth_views
-from django.urls import path, include
+from django.urls import path
 from lending_site.views import IndexListView
+
 
 urlpatterns = [
     path('', IndexListView.as_view(), name='blog-home')
