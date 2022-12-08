@@ -25,7 +25,8 @@ class IndexListView(ListView):
         data = request.data
         saved = save_applicants(data)
         save_dict = {"saved":saved}
-        context = get_context() + save_dict
+        context = get_context() | save_dict
         return render(request,template_name,context)
+    
 
 
