@@ -47,7 +47,7 @@
           {% if vacancy|length > 0 %}
               <li><a class="nav-link scrollto" href="#vacancyes">Вакансии</a></li>
           {% endif %}
-          <li><a class="nav-link   scrollto" href="#">Присоединиться к нам</a></li>
+          <li><a class="nav-link   scrollto" href="#contact">Присоединиться к нам</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav>
@@ -66,7 +66,11 @@
           </div>
         </div>
         <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
-            <img src="{% static 'img/hero-img.png' %}" class="img-fluid animated" alt="">
+            {% if company.image %}
+            <img src="{{ company.image }}" class="img-fluid animated" alt="">
+            {% else %}
+                <img src="{% static 'img/hero-img.png' %}" class="img-fluid animated" alt="">
+            {% endif %}
         </div>
       </div>
     </div>
@@ -81,7 +85,7 @@
         <div class="section-title">
             <h2>{{ company.name }}</h2>
         </div>
-        <img src="{{ company.image.url }}" class="img-fluid" alt="">
+        <img src="{{ company.image }}" class="img-fluid" alt="">
         <div class="row content">
           <div class="col-lg-6" style="margin: auto;">
             <p>
@@ -107,7 +111,7 @@
         {% for contact in contacts %}
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100"  style="margin: auto;">
             <div class="box">
-              <h3>Офис на Макатаева</h3>
+            <h3>{{ contact.title }}</h3>
               <div class="address">
                   <h5><i class="bi bi-geo-alt"></i>{{ contact.adress }}</h5>
               </div>
@@ -138,7 +142,7 @@
                 <div>
                 {% for v in vacancy %}
                     <div class="content">
-                        <h3>{{ v.v_name }}</h3>
+                        <h3>{{ v.name }}</h3>
                     </div>
 
                     <div class="accordion-list">
@@ -174,38 +178,13 @@
           </p>
         </div>
 
-        <div class="row">
-
-          <div class="col-lg-5 d-flex align-items-stretch">
-            <div class="info">
-              <div class="address">
-                <i class="bi bi-geo-alt"></i>
-                <h4>Location:</h4>
-                <p>A108 Adam Street, New York, NY 535022</p>
-              </div>
-
-              <div class="email">
-                <i class="bi bi-envelope"></i>
-                <h4>Email:</h4>
-                <p>info@example.com</p>
-              </div>
-
-              <div class="phone">
-                <i class="bi bi-phone"></i>
-                <h4>Call:</h4>
-                <p>+1 5589 55488 55s</p>
-              </div>
-
-            </div>
-
-          </div>
-
-          <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+          <div class="col-lg-12 mt-5 mt-lg-0 d-flex align-items-stretch">
+            <form method="POST" class="php-email-form" enctype="multipart/form-data">
+            {% csrf_token %}
               <div class="row">
                 <div class="form-group col-md-6">
                   <label for="name">ФИО:</label>
-                  <input type="text" name="name" class="form-control" id="name" required>
+                  <input type="text" name="full_name" class="form-control" id="name" required>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="name">Email:</label>
@@ -215,25 +194,25 @@
               <div class="row">
                 <div class="form-group col-md-6">
                   <label for="name">Телефон:</label>
-                  <input type="phone" class="form-control" name="email" id="email" required>
+                  <input type="phone" class="form-control" name="phone" id="email" required>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="name">Вакансия:</label>
-                  {% for v in vacancy %}
                   <select name="vacancy" class="form-select" required>
-                      <option style="font-size: 14px; color: #212529;" value="{{ v.id }}">{{ v.v_name }} </option>
-                  </select>
+                      <option style="font-size: 14px; color: #212529;" value=""> --Выберите вакансию </option>
+                  {% for v in vacancy %}
+                      <option style="font-size: 14px; color: #212529;" value="{{ v.id }}">{{ v.name }} </option>
                   {% endfor %}
+                  </select>
                 </div>
             </div>
               <div class="form-group">
                 <label for="name">Описание</label>
-                <textarea class="form-control" name="message" rows="10" required></textarea>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
+                <textarea class="form-control" name="comment" rows="10" required></textarea>
+              <div class="mb-3">
+                  <label for="formFile" class="form-label">Прикрепить резюме:</label>
+                  <input name="file" class="form-control" type="file" id="formFile" accept=".pdf, .doc, .docx">
+             </div>
               <div class="text-center"><button type="submit">Отправить отклик</button></div>
             </form>
           </div>
@@ -245,71 +224,6 @@
 
   </main>
 
-  <footer id="footer">
-    <div class="footer-newsletter">
-    <div class="footer-top">
-      <div class="container">
-        <div class="row">
-
-          <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>Arsha</h3>
-            <p>
-              A108 Adam Street <br>
-              New York, NY 535022<br>
-              United States <br><br>
-              <strong>Phone:</strong> +1 5589 55488 55<br>
-              <strong>Email:</strong> info@example.com<br>
-            </p>
-          </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Useful Links</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Social Networks</h4>
-            <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
-            <div class="social-links mt-3">
-              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-              <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <div class="container footer-bottom clearfix">
-      <div class="copyright">
-        &copy; Copyright <strong><span>Arsha</span></strong>. All Rights Reserved
-      </div>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
-    </div>
-  </footer><!-- End Footer -->
-
   <div id="preloader"></div>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
@@ -320,7 +234,6 @@
   <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
   <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
   <script src="{% static 'vendor/waypoints/noframework.waypoints.js' %}"></script>
-  <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
 
   <!-- Template Main JS File -->
   <script src="{% static 'js/main.js' %}"></script>
