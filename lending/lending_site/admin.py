@@ -8,6 +8,7 @@ class ContactsInline(admin.StackedInline):
     model = Contacts
     extra = 0
 
+
 class CompanyAdmin(SingletonModelAdmin):
     class Meta:
         model = Company
@@ -21,6 +22,15 @@ class CompanyAdmin(SingletonModelAdmin):
 
 
 class ApplicantsAdmin(admin.ModelAdmin):
+    list_display = (
+        'full_name',
+        'contact',
+        'posted_date'
+    )
+    ordering = [
+        'posted_date',
+    ]
+
     class Meta:
         model = Applicants
         fields = [
@@ -33,7 +43,10 @@ class ApplicantsAdmin(admin.ModelAdmin):
             'file'
         ]
 
+
 class VacancyAdmin(admin.ModelAdmin):
+    list_display = ('name', 'salary')
+
     class Meta:
         model = Vacancy
         fields = [
@@ -43,6 +56,7 @@ class VacancyAdmin(admin.ModelAdmin):
             'create_date',
             'activated'
         ]
+
 
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Vacancy, VacancyAdmin)
