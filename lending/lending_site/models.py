@@ -6,11 +6,11 @@ class Company(SingletonModel):
     name = models.CharField(
         verbose_name="Название",
         max_length=50,
-        default= 'Лучшая компания'
+        default='Лучшая компания'
     )
     description = models.TextField(
         verbose_name="Описание",
-        default= 'О нашей компании'
+        default='О нашей компании'
     )
     image = models.ImageField(
         verbose_name='Картинка',
@@ -82,6 +82,9 @@ class Vacancy(models.Model):
         default=True,
     )
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         db_table = 'vacancy'
         verbose_name = 'Вакансия'
@@ -117,11 +120,11 @@ class Applicants(models.Model):
     file = models.FileField(
         verbose_name='Файл',
         upload_to='files/',
-        null=True
+        null=True,
+        blank=True,
     )
 
     class Meta:
         db_table = 'applicants'
         verbose_name = 'Соискатель'
         verbose_name_plural = 'Соискатели'
-
