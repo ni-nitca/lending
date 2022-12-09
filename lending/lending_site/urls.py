@@ -3,5 +3,5 @@ from lending_site.views import IndexListView
 
 
 urlpatterns = [
-    path('', IndexListView.as_view(), name='blog-home')
+    path(r'', IndexListView.as_view(), name='blog-home')
 ]
