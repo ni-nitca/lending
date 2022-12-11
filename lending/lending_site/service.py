@@ -6,6 +6,7 @@ from lending_site.models import (
 )
 
 
+
 def get_queryset_company():
     company_queryset = Company.objects.get_or_create(pk=1)[0]
     data = {
@@ -48,7 +49,8 @@ def check_json(file_of_json):
 
 def save_applicants(file_of_json):
     if check_json(file_of_json):
-        applicants = Applicants
+        applicants = Applicants()
+        applicants.contact_id = file_of_json['vacancy']
         applicants.full_name = file_of_json['full_name']
         applicants.phone = file_of_json['phone']
         applicants.email = file_of_json['email']
