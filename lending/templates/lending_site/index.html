@@ -27,7 +27,6 @@
   <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
 
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
-
 </head>
 
 <body>
@@ -213,7 +212,7 @@
                   <label for="formFile" class="form-label">Прикрепить резюме:</label>
                   <input name="file" class="form-control" type="file" id="formFile" accept=".pdf, .doc, .docx">
              </div>
-              <div class="text-center"><button type="submit">Отправить отклик</button></div>
+              <div class="text-center"><button type="submit" data-toggle="modal" data-target="#exampleModal">Отправить отклик</button></div>
             </form>
           </div>
 
@@ -221,20 +220,56 @@
 
       </div>
     </section>
-
   </main>
 
+    <div id="cvSend" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Отправка отклика</h5>
+          </div>
+          <div class="modal-body">
+              <p>
+                {% if saved %}
+                    Спасибо! Отклик успешно отправлен!
+                {% else %}
+                    Не удалось отправить отклик. Пожалуйста, попробуйте ещё раз
+                {% endif %}
+              </p>
+          </div>
+          <div class="modal-footer">
+            <button onclick="closeCvSend()" type="button" class="btn btn-primary">Ок</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   <div id="preloader"></div>
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#hero" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="{% static 'vendor/aos/aos.js' %}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script' %}>
   <script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
   <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
   <script src="{% static 'vendor/waypoints/noframework.waypoints.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+  <script type="text/javascript">
+      {% if saved %}
+        $(document).ready(function() {
+            $('#cvSend').modal('show');
+        });
+     {% endif %}
+  </script>
+  <script>
+      function closeCvSend() {
+         $("#cvSend").modal('hide');
+      }
+  </script>
   <!-- Template Main JS File -->
   <script src="{% static 'js/main.js' %}"></script>
 
