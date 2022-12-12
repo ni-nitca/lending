@@ -1,3 +1,5 @@
+from django.core.files.storage import FileSystemStorage
+
 from django.shortcuts import (
     render,
 )
@@ -6,7 +8,7 @@ from django.views.generic import (
 )
 from lending_site.service import (
     get_context,
-    save_applicants
+    save_applicants,
 )
 
 
@@ -18,9 +20,20 @@ class IndexListView(ListView):
 
     def post(self, request):
         template_name = 'lending_site/index.html'
-        data = request.POST
-
-        saved = save_applicants(data)
-        context = get_context()
-        context['saved'] = saved
-        return render(request, template_name, context)
+        if request.method == 'POST' and request.FILES:
+            data = request.POST
+            file = request.FILES['file']
+            fs = FileSystemStorage()
+            filename = fs.save(file.name, file)
+        
+            saved = save_applicants(data,filename)
+            context = get_context()
+            context['saved'] = saved
+            return render(request, template_name, context)
+        else:
+            data = request.POST
+            filename = "No file"
+            saved = save_applicants(data,filename)
+            context = get_context()
+            context['saved'] = saved
+            return render(request, template_name, context)
