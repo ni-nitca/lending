@@ -37,7 +37,6 @@ def check_json(file_of_json):
             "phone",
             "email",
             "comment",
-            "file",
         ]
         for value in true_list:
             if value not in values:
@@ -47,7 +46,8 @@ def check_json(file_of_json):
         return False
 
 
-def save_applicants(file_of_json):
+
+def save_applicants(file_of_json,file_url):
     if check_json(file_of_json):
         applicants = Applicants()
         applicants.contact_id = file_of_json['vacancy']
@@ -55,7 +55,7 @@ def save_applicants(file_of_json):
         applicants.phone = file_of_json['phone']
         applicants.email = file_of_json['email']
         applicants.comment = file_of_json['comment']
-        applicants.file = file_of_json['file']
+        applicants.file = file_url
         applicants.save()
         return True
     else:
@@ -72,3 +72,4 @@ def get_context():
         "contacts": contacts_data,
     }
     return data
+
