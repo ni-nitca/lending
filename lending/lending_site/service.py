@@ -4,6 +4,7 @@ from lending_site.models import (
     Applicants,
     Contacts
 )
+from django.core.files.storage import FileSystemStorage
 
 
 
@@ -47,14 +48,28 @@ def check_json(file_of_json):
 
 
 
-def save_applicants(file_of_json,file_url):
-    if check_json(file_of_json):
+def save_applicants(req):
+    fs = FileSystemStorage()
+    if req.method == 'POST' and req.FILES:
+        data = req.POST
+        file = req.FILES['file']
+        filename = fs.save(file.name, file)
+        return save(data,filename)
+
+    else:
+        data = req.POST
+        filename = "No file"
+        return save(data,filename)
+
+
+def save(data,file_url):
+    if check_json(data):
         applicants = Applicants()
-        applicants.contact_id = file_of_json['vacancy']
-        applicants.full_name = file_of_json['full_name']
-        applicants.phone = file_of_json['phone']
-        applicants.email = file_of_json['email']
-        applicants.comment = file_of_json['comment']
+        applicants.contact_id = data['vacancy']
+        applicants.full_name = data['full_name']
+        applicants.phone = data['phone']
+        applicants.email = data['email']
+        applicants.comment = data['comment']
         applicants.file = file_url
         applicants.save()
         return True
